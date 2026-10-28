@@ -100,6 +100,15 @@
   .text-block { font-size: 14px; line-height: 1.5; }
   .tokens { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
   .refresh-note { text-align: center; font-size: 11px; color: var(--text-dim); margin-top: 8px; }
+
+  .alloc-bar { display: flex; width: 100%; height: 14px; border-radius: 7px; overflow: hidden; background: var(--badge-bg); }
+  .alloc-bar span { height: 100%; }
+  .alloc-legend { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-top: 12px; }
+  .alloc-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-dim); }
+  .alloc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  svg.bars { width: 100%; height: 60px; display: block; }
+  .bars-caption { font-size: 11px; color: var(--text-dim); margin-top: 6px; }
   .error-banner {
     display: none;
     background: var(--badge-bg);
@@ -127,8 +136,20 @@
     </div>
 
     <div class="card">
+      <h2>Allocazione</h2>
+      <div class="alloc-bar" id="alloc-bar"></div>
+      <div class="alloc-legend" id="alloc-legend"></div>
+    </div>
+
+    <div class="card">
       <h2>Posizioni aperte</h2>
       <div id="positions"><div class="empty">Caricamento…</div></div>
+    </div>
+
+    <div class="card">
+      <h2>Token per ciclo</h2>
+      <svg class="bars" id="token-bars" viewBox="0 0 300 60" preserveAspectRatio="none"></svg>
+      <div class="bars-caption" id="token-bars-caption"></div>
     </div>
 
     <div class="card">
@@ -169,9 +190,23 @@
     failed: "Invio fallito",
   };
 
+  // Tavolozza fissa per i titoli in portafoglio, stabile tra un aggiornamento e l'altro
+  // (non dipende dall'ordine in cui arrivano le posizioni).
+  const PALETTE = ["#2563eb", "#f59e0b", "#8b5cf6", "#06b6d4", "#ec4899", "#84cc16", "#f97316", "#14b8a6"];
+  function colorFor(symbol) {
+    let hash = 0;
+    for (let i = 0; i < symbol.length; i++) hash = (hash * 31 + symbol.charCodeAt(i)) >>> 0;
+    return PALETTE[hash % PALETTE.length];
+  }
+
   function renderChart(history) {
     const svg = document.getElementById("chart");
-    if (!history || history.length < 2) { svg.innerHTML = ""; return; }
+    if (!history || history.length === 0) { svg.innerHTML = ""; return; }
+    if (history.length === 1) {
+      // Un solo punto: nessuna linea disegnabile, mostra solo un pallino così non sembra rotto.
+      svg.innerHTML = `<circle cx="150" cy="36" r="4" fill="var(--accent)"></circle>`;
+      return;
+    }
     const values = history.map((pt) => pt.equity);
     const min = Math.min(...values), max = Math.max(...values);
     const range = max - min || 1;
@@ -188,6 +223,46 @@
       <polygon points="${coords[0][0]},${h} ${line} ${coords[coords.length - 1][0]},${h}" fill="${color}" opacity="0.12"></polygon>
       <polyline points="${line}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></polyline>
     `;
+  }
+
+  function renderAllocation(account, positions) {
+    const bar = document.getElementById("alloc-bar");
+    const legend = document.getElementById("alloc-legend");
+    const equity = account.equity || 0;
+    if (equity <= 0) { bar.innerHTML = ""; legend.innerHTML = ""; return; }
+
+    const investedValue = positions.reduce((sum, p) => sum + p.marketValue, 0);
+    const cashValue = Math.max(0, equity - investedValue);
+    const segments = [
+      ...positions.map((p) => ({ label: p.name, value: p.marketValue, color: colorFor(p.symbol) })),
+      { label: "Liquidità", value: cashValue, color: "var(--text-dim)" },
+    ].filter((s) => s.value > 0);
+
+    bar.innerHTML = segments.map((s) => `<span style="width:${(s.value / equity) * 100}%; background:${s.color};"></span>`).join("");
+    legend.innerHTML = segments
+      .map((s) => `<div class="alloc-item"><span class="alloc-dot" style="background:${s.color};"></span>${s.label} · ${((s.value / equity) * 100).toFixed(1)}%</div>`)
+      .join("");
+  }
+
+  function renderTokenBars(history) {
+    const svg = document.getElementById("token-bars");
+    const caption = document.getElementById("token-bars-caption");
+    const points = (history || []).filter((pt) => typeof pt.tokensTotal === "number").slice(-20);
+    if (points.length === 0) { svg.innerHTML = ""; caption.textContent = ""; return; }
+
+    const max = Math.max(...points.map((pt) => pt.tokensTotal), 1);
+    const w = 300, h = 60, gap = 3;
+    const barWidth = (w - gap * (points.length - 1)) / points.length;
+    svg.innerHTML = points
+      .map((pt, i) => {
+        const barHeight = Math.max(2, (pt.tokensTotal / max) * h);
+        const x = i * (barWidth + gap);
+        const y = h - barHeight;
+        return `<rect x="${x}" y="${y}" width="${barWidth}" height="${barHeight}" rx="2" fill="var(--accent)"></rect>`;
+      })
+      .join("");
+    const total = points.reduce((sum, pt) => sum + pt.tokensTotal, 0);
+    caption.textContent = `Ultimi ${points.length} cicli · ${total.toLocaleString("it-IT")} token in totale`;
   }
 
   function renderPositions(positions) {
@@ -243,8 +318,11 @@
       document.getElementById("updated").textContent = fmtDate(latest.updatedAtIso);
       document.getElementById("equity").textContent = fmtMoney(latest.account.equity);
       document.getElementById("equity-sub").innerHTML =
-        `<span class="pill ${latest.marketOpen ? "open" : "closed"}">${latest.marketOpen ? "Mercato aperto" : "Mercato chiuso"}</span> &nbsp;${latest.slot ?? ""}`;
+        `<span class="pill ${latest.marketOpen ? "open" : "closed"}">${latest.marketOpen ? "Mercato aperto" : "Mercato chiuso"}</span> ` +
+        `&nbsp;${latest.slot ?? ""} <span style="opacity:0.7">(all'ultimo ciclo)</span>`;
       renderChart(history);
+      renderAllocation(latest.account, latest.positions);
+      renderTokenBars(history);
       renderPositions(latest.positions);
       document.getElementById("market-view").textContent = latest.marketView ?? "—";
       renderOperations(latest.operations);
