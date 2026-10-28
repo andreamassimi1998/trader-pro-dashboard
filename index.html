@@ -99,6 +99,7 @@
   .badge.submitted { background: color-mix(in srgb, var(--green) 18%, transparent); color: var(--green); }
   .badge.rejected { background: color-mix(in srgb, var(--red) 15%, transparent); color: var(--red); }
   .badge.skipped, .badge.failed { background: var(--badge-bg); color: var(--text-dim); }
+  .badge.awaiting-confirmation { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
   .empty { color: var(--text-dim); font-size: 13px; padding: 4px 0; }
   .text-block { font-size: 14px; line-height: 1.5; }
   .refresh-note { text-align: center; font-size: 11px; color: var(--text-dim); margin-top: 8px; }
@@ -189,6 +190,7 @@
     rejected: "Bloccata dalla gabbia",
     "skipped-market-closed": "Mercato chiuso",
     failed: "Invio fallito",
+    "awaiting-confirmation": "In attesa di conferma",
   };
 
   // Tavolozza fissa per i titoli in portafoglio, stabile tra un aggiornamento e l'altro
