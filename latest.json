@@ -1,0 +1,11 @@
+{
+  "updatedAtIso": "2026-10-28T00:00:00.000Z",
+  "slot": "in attesa del primo ciclo",
+  "marketOpen": false,
+  "account": { "equity": 0, "cash": 0, "buyingPower": 0 },
+  "positions": [],
+  "marketView": "Nessun dato ancora: questa pagina si popola al primo ciclo di trader-pro.",
+  "operations": [],
+  "planNext": "—",
+  "tokens": { "total": 0, "input": 0, "output": 0, "cacheRead": 0, "cacheCreation": 0, "durationMs": 0 }
+}
