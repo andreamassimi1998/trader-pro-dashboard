@@ -1,28 +1,28 @@
 {
-  "updatedAtIso": "2026-10-28T19:10:36.999Z",
-  "slot": "verifica protezioni",
+  "updatedAtIso": "2026-10-28T19:50:46.596Z",
+  "slot": "apertura",
   "marketOpen": true,
   "account": {
-    "equity": 99852.98,
+    "equity": 100069.3,
     "cash": 2363.86,
-    "buyingPower": 282424.98
+    "buyingPower": 283030.67
   },
   "positions": [
     {
       "symbol": "IVV",
       "name": "S&P 500 (nucleo)",
       "qty": 126,
-      "marketValue": 97489.1232,
-      "unrealizedPlPercent": -0.00151
+      "marketValue": 97705.44,
+      "unrealizedPlPercent": 0.00071
     }
   ],
-  "marketView": "La banca centrale americana ha lasciato i tassi fermi al 3,75%-4%, ma due membri spingevano per un rialzo e i mercati scommettono su un aumento a dicembre; l'economia resta solida e l'inflazione sotto osservazione.",
+  "marketView": "La banca centrale ha lasciato i tassi fermi, ma i mercati scommettono su un possibile rialzo a dicembre; l'economia viene descritta come solida e l'inflazione sotto controllo, quindi il quadro resta incerto ma senza scossoni.",
   "operations": [],
   "vetoes": [],
-  "planNext": "Alla prossima sveglia controllare come reagiscono i mercati alla decisione della banca centrale e se il settore comunicazioni, l'oro o altri titoli generano un candidato d'ingresso.",
+  "planNext": "Alla prossima sveglia vedere se il settore comunicazioni, già sceso molto nell'ultimo mese, o altri titoli fanno scattare la regola d'ingresso, e come reagiscono i mercati alle attese sui tassi di dicembre.",
   "funnel": {
     "sinceIso": "2026-10-28T16:57:45.920Z",
-    "cycles": 4,
+    "cycles": 5,
     "cyclesWithCandidates": 0,
     "candidates": 0,
     "vetoes": 0,
@@ -56,15 +56,15 @@
     "ciHigh": null,
     "totalPnl": 0,
     "avgEntrySlippage": null,
-    "line": "Dal 2026-10-28: conto 0.00% contro S&P 500 0.00% · nessun trade chiuso",
+    "line": "Dal 2026-10-28: conto 0.22% contro S&P 500 0.03% · nessun trade chiuso",
     "startIso": "2026-10-28T19:10:30.295Z"
   },
   "tokens": {
-    "total": 9219,
+    "total": 9215,
     "input": 2,
-    "output": 304,
+    "output": 317,
     "cacheRead": 0,
-    "cacheCreation": 8913,
-    "durationMs": 5308
+    "cacheCreation": 8896,
+    "durationMs": 6979
   }
 }
