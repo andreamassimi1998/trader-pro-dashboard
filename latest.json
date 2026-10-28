@@ -1,6 +1,6 @@
 {
-  "updatedAtIso": "2026-10-28T15:57:28.725Z",
-  "slot": "apertura",
+  "updatedAtIso": "2026-10-28T16:57:51.114Z",
+  "slot": "verifica nuova regola",
   "marketOpen": true,
   "account": {
     "equity": 100000,
@@ -8,15 +8,34 @@
     "buyingPower": 400000
   },
   "positions": [],
-  "marketView": "Il quadro è tranquillo: tassi fermi, disoccupazione stabile e mercati senza una direzione netta, con gli investitori in attesa dei conti di Microsoft e di una probabile pausa della banca centrale.",
+  "marketView": "Il quadro è stabile: tassi fermi al 3,75%, disoccupazione al 4,2%, e oggi l'attenzione è sulla riunione della Fed (si attende una pausa) e sul petrolio sopra i 102 dollari.",
   "operations": [],
-  "planNext": "Vedere come reagisce il mercato ai conti di Microsoft e se qualche titolo, come l'oro che è il più debole, scende in una zona in cui di solito rimbalza.",
+  "vetoes": [],
+  "planNext": "Alla prossima sveglia controllare la decisione della Fed, i conti di Microsoft e se qualche titolo, come il settore comunicazioni o l'oro, genera un candidato d'ingresso.",
+  "funnel": {
+    "sinceIso": "2026-10-28T16:57:45.920Z",
+    "cycles": 1,
+    "cyclesWithCandidates": 0,
+    "candidates": 0,
+    "vetoes": 0,
+    "cyclesWithProposals": 0,
+    "proposals": 0,
+    "rejected": 0,
+    "rejectedByCode": {},
+    "awaitingConfirmation": 0,
+    "confirmed": 0,
+    "submitted": 0,
+    "failed": 0,
+    "lastProposalIso": null,
+    "lastSubmittedIso": null,
+    "lastStallAlertIso": null
+  },
   "tokens": {
-    "total": 5749,
+    "total": 7845,
     "input": 2,
-    "output": 259,
+    "output": 267,
     "cacheRead": 0,
-    "cacheCreation": 5488,
-    "durationMs": 4770
+    "cacheCreation": 7576,
+    "durationMs": 3579
   }
 }
