@@ -1,22 +1,22 @@
 {
-  "updatedAtIso": "2026-10-28T12:06:25.887Z",
-  "slot": "prova performance",
-  "marketOpen": false,
+  "updatedAtIso": "2026-10-28T15:57:28.725Z",
+  "slot": "apertura",
+  "marketOpen": true,
   "account": {
     "equity": 100000,
     "cash": 100000,
     "buyingPower": 400000
   },
   "positions": [],
-  "marketView": "Il quadro è misto: tassi fermi, disoccupazione bassa e il mercato aspetta la decisione della banca centrale americana; nessun titolo mostra un segnale di rimbalzo chiaro.",
+  "marketView": "Il quadro è tranquillo: tassi fermi, disoccupazione stabile e mercati senza una direzione netta, con gli investitori in attesa dei conti di Microsoft e di una probabile pausa della banca centrale.",
   "operations": [],
-  "planNext": "Alla prossima sveglia guardare cosa decide la banca centrale americana e se qualche titolo scende abbastanza da diventare un'occasione di rimbalzo.",
+  "planNext": "Vedere come reagisce il mercato ai conti di Microsoft e se qualche titolo, come l'oro che è il più debole, scende in una zona in cui di solito rimbalza.",
   "tokens": {
-    "total": 22360,
+    "total": 5749,
     "input": 2,
-    "output": 241,
-    "cacheRead": 13093,
-    "cacheCreation": 9024,
-    "durationMs": 4432
+    "output": 259,
+    "cacheRead": 0,
+    "cacheCreation": 5488,
+    "durationMs": 4770
   }
 }
