@@ -1,20 +1,28 @@
 {
-  "updatedAtIso": "2026-10-28T16:57:51.114Z",
-  "slot": "verifica nuova regola",
+  "updatedAtIso": "2026-10-28T17:58:54.642Z",
+  "slot": "attivazione nucleo",
   "marketOpen": true,
   "account": {
-    "equity": 100000,
-    "cash": 100000,
-    "buyingPower": 400000
+    "equity": 99994.96,
+    "cash": 2363.86,
+    "buyingPower": 282822.52
   },
-  "positions": [],
-  "marketView": "Il quadro è stabile: tassi fermi al 3,75%, disoccupazione al 4,2%, e oggi l'attenzione è sulla riunione della Fed (si attende una pausa) e sul petrolio sopra i 102 dollari.",
+  "positions": [
+    {
+      "symbol": "IVV",
+      "name": "S&P 500 (nucleo)",
+      "qty": 126,
+      "marketValue": 97631.1,
+      "unrealizedPlPercent": -0.00005
+    }
+  ],
+  "marketView": "Il quadro è stabile: i tassi della Fed sono fermi al 3,75%, la disoccupazione è al 4,2% e oggi il mercato aspetta la decisione della banca centrale, con il petrolio sopra i 102 dollari e le tensioni con l'Iran sullo sfondo.",
   "operations": [],
   "vetoes": [],
-  "planNext": "Alla prossima sveglia controllare la decisione della Fed, i conti di Microsoft e se qualche titolo, come il settore comunicazioni o l'oro, genera un candidato d'ingresso.",
+  "planNext": "Alla prossima sveglia controllare la decisione della Fed, i conti di Microsoft e se il settore comunicazioni o l'oro generano un candidato d'ingresso.",
   "funnel": {
     "sinceIso": "2026-10-28T16:57:45.920Z",
-    "cycles": 1,
+    "cycles": 2,
     "cyclesWithCandidates": 0,
     "candidates": 0,
     "vetoes": 0,
@@ -31,11 +39,11 @@
     "lastStallAlertIso": null
   },
   "tokens": {
-    "total": 7845,
+    "total": 8242,
     "input": 2,
-    "output": 267,
+    "output": 281,
     "cacheRead": 0,
-    "cacheCreation": 7576,
-    "durationMs": 3579
+    "cacheCreation": 7959,
+    "durationMs": 3451
   }
 }
