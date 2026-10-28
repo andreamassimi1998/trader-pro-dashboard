@@ -1,11 +1,22 @@
 {
-  "updatedAtIso": "2026-10-28T00:00:00.000Z",
-  "slot": "in attesa del primo ciclo",
+  "updatedAtIso": "2026-10-28T11:32:21.238Z",
+  "slot": "prova dashboard",
   "marketOpen": false,
-  "account": { "equity": 0, "cash": 0, "buyingPower": 0 },
+  "account": {
+    "equity": 100000,
+    "cash": 100000,
+    "buyingPower": 400000
+  },
   "positions": [],
-  "marketView": "Nessun dato ancora: questa pagina si popola al primo ciclo di trader-pro.",
+  "marketView": "Il quadro è misto: i tassi sono fermi e il lavoro regge, ma i principali indici sono senza una direzione chiara e domani c'è la decisione della banca centrale americana.",
   "operations": [],
-  "planNext": "—",
-  "tokens": { "total": 0, "input": 0, "output": 0, "cacheRead": 0, "cacheCreation": 0, "durationMs": 0 }
+  "planNext": "Alla prossima sveglia controllare la reazione del mercato alla decisione sui tassi e se l'oro, in calo da mesi, e i titoli tecnologici trovano un punto di appoggio.",
+  "tokens": {
+    "total": 21918,
+    "input": 2,
+    "output": 235,
+    "cacheRead": 13093,
+    "cacheCreation": 8588,
+    "durationMs": 3005
+  }
 }
