@@ -1,6 +1,6 @@
 {
-  "updatedAtIso": "2026-10-28T11:32:21.238Z",
-  "slot": "prova dashboard",
+  "updatedAtIso": "2026-10-28T11:37:25.298Z",
+  "slot": "prova grafici",
   "marketOpen": false,
   "account": {
     "equity": 100000,
@@ -8,15 +8,15 @@
     "buyingPower": 400000
   },
   "positions": [],
-  "marketView": "Il quadro è misto: i tassi sono fermi e il lavoro regge, ma i principali indici sono senza una direzione chiara e domani c'è la decisione della banca centrale americana.",
+  "marketView": "Il quadro è misto: i tassi sono fermi, l'economia regge, ma il mercato oggi aspetta la decisione della banca centrale e i titoli più tecnologici mostrano un po' di debolezza.",
   "operations": [],
-  "planNext": "Alla prossima sveglia controllare la reazione del mercato alla decisione sui tassi e se l'oro, in calo da mesi, e i titoli tecnologici trovano un punto di appoggio.",
+  "planNext": "Dopo la decisione della banca centrale, controllare se i titoli tecnologici recuperano e se Apple conferma la forza senza essere già troppo cara.",
   "tokens": {
-    "total": 21918,
+    "total": 21933,
     "input": 2,
-    "output": 235,
+    "output": 250,
     "cacheRead": 13093,
     "cacheCreation": 8588,
-    "durationMs": 3005
+    "durationMs": 4614
   }
 }
