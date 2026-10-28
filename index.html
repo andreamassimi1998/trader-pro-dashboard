@@ -114,6 +114,12 @@
   .stat-label { font-size: 11px; color: var(--text-dim); }
   .stat-value { font-size: 15px; font-weight: 600; margin-top: 1px; }
 
+  .perf-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; }
+  .perf-label { font-size: 13px; color: var(--text-dim); }
+  .perf-value { font-size: 15px; font-weight: 700; }
+  .perf-divider { height: 1px; background: var(--border); margin: 8px 0 12px; }
+  .perf-caption { font-size: 11px; color: var(--text-dim); margin-top: 10px; line-height: 1.5; }
+
   .error-banner {
     display: none;
     background: var(--badge-bg);
@@ -141,6 +147,24 @@
       </div>
       <div class="equity-sub" id="equity-sub">—</div>
       <svg class="chart" id="chart" viewBox="0 0 300 72" preserveAspectRatio="none"></svg>
+    </div>
+
+    <div class="card">
+      <h2>Performance vs S&amp;P 500</h2>
+      <div class="perf-row">
+        <div class="perf-label">trader-pro</div>
+        <div class="perf-value" id="perf-strategy">—</div>
+      </div>
+      <div class="perf-row">
+        <div class="perf-label">S&amp;P 500 (comprare e tenere, stesso periodo)</div>
+        <div class="perf-value" id="perf-benchmark">—</div>
+      </div>
+      <div class="perf-divider"></div>
+      <div class="stat-grid">
+        <div><div class="stat-label">Drawdown massimo</div><div class="stat-value" id="perf-drawdown">—</div></div>
+        <div><div class="stat-label">Sharpe ratio (annualizzato)</div><div class="stat-value" id="perf-sharpe">—</div></div>
+      </div>
+      <div class="perf-caption" id="perf-caption"></div>
     </div>
 
     <div class="card">
@@ -257,6 +281,71 @@
     el.textContent = fmtPercent(pct);
   }
 
+  // Le metriche con cui si giudica davvero un trader: non il valore assoluto del conto, ma
+  // il rendimento contro un benchmark passivo, il peggior calo dal picco (drawdown), e il
+  // rendimento aggiustato per il rischio (Sharpe). Calcolate qui, mai inventate: derivano
+  // solo dai punti storici reali scritti ad ogni ciclo.
+  function computeMetrics(history) {
+    const valid = (history || []).filter((pt) => typeof pt.equity === "number");
+    if (valid.length < 2) return null;
+
+    const totalReturn = valid[valid.length - 1].equity / valid[0].equity - 1;
+
+    const withBenchmark = valid.filter((pt) => typeof pt.benchmarkPrice === "number");
+    const benchmarkReturn =
+      withBenchmark.length >= 2
+        ? withBenchmark[withBenchmark.length - 1].benchmarkPrice / withBenchmark[0].benchmarkPrice - 1
+        : null;
+
+    let peak = valid[0].equity;
+    let maxDrawdown = 0;
+    for (const pt of valid) {
+      peak = Math.max(peak, pt.equity);
+      maxDrawdown = Math.max(maxDrawdown, (peak - pt.equity) / peak);
+    }
+
+    // Sharpe: tasso privo di rischio assunto 0 (semplificazione dichiarata), annualizzato su
+    // ~2 cicli di mercato al giorno (~504/anno) — approssimato, i cicli manuali di prova non
+    // seguono questa cadenza esatta. Serve un numero minimo di osservazioni per avere senso.
+    const periodReturns = [];
+    for (let i = 1; i < valid.length; i++) periodReturns.push(valid[i].equity / valid[i - 1].equity - 1);
+    const mean = periodReturns.reduce((a, b) => a + b, 0) / periodReturns.length;
+    const variance =
+      periodReturns.length > 1
+        ? periodReturns.reduce((s, r) => s + (r - mean) ** 2, 0) / (periodReturns.length - 1)
+        : 0;
+    const stdev = Math.sqrt(variance);
+    const sharpe = periodReturns.length >= 6 && stdev > 0 ? (mean / stdev) * Math.sqrt(504) : null;
+
+    return { n: valid.length, totalReturn, benchmarkReturn, maxDrawdown, sharpe };
+  }
+
+  function renderPerformance(history) {
+    const m = computeMetrics(history);
+    const strategyEl = document.getElementById("perf-strategy");
+    const benchmarkEl = document.getElementById("perf-benchmark");
+    const drawdownEl = document.getElementById("perf-drawdown");
+    const sharpeEl = document.getElementById("perf-sharpe");
+    const captionEl = document.getElementById("perf-caption");
+
+    if (!m) {
+      strategyEl.textContent = benchmarkEl.textContent = drawdownEl.textContent = sharpeEl.textContent = "—";
+      captionEl.textContent = "Dati insufficienti: serve più di un ciclo per calcolare un rendimento.";
+      return;
+    }
+
+    strategyEl.textContent = fmtPercent(m.totalReturn);
+    strategyEl.className = "perf-value " + (m.totalReturn >= 0 ? "pl up" : "pl down");
+    benchmarkEl.textContent = m.benchmarkReturn !== null ? fmtPercent(m.benchmarkReturn) : "n/d";
+    benchmarkEl.className = "perf-value " + (m.benchmarkReturn !== null ? (m.benchmarkReturn >= 0 ? "pl up" : "pl down") : "");
+    drawdownEl.textContent = "-" + (m.maxDrawdown * 100).toFixed(2) + "%";
+    sharpeEl.textContent = m.sharpe !== null ? m.sharpe.toFixed(2) : "n/d";
+
+    const notes = [`${m.n} cicli registrati — include run di prova manuali, non solo cicli automatici.`];
+    if (m.sharpe === null) notes.push("Sharpe non ancora calcolabile: servono almeno 6 cicli consecutivi.");
+    captionEl.textContent = notes.join(" ");
+  }
+
   function renderPositions(positions) {
     const el = document.getElementById("positions");
     if (!positions || positions.length === 0) {
@@ -330,6 +419,7 @@
         `&nbsp;${latest.slot ?? ""} <span style="opacity:0.7">(all'ultimo ciclo)</span>`;
       renderChart(history);
       renderEquityChange(history);
+      renderPerformance(history);
       renderAllocation(latest.account, latest.positions);
       renderPositions(latest.positions);
       document.getElementById("market-view").textContent = latest.marketView ?? "—";
