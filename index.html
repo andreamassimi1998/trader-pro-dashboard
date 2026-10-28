@@ -49,9 +49,12 @@
     border-radius: 14px;
     padding: 16px;
     margin-bottom: 14px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   }
+  .equity-row { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
   .equity-value { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; }
-  .equity-sub { font-size: 13px; color: var(--text-dim); margin-top: 2px; }
+  .equity-change { font-size: 15px; font-weight: 600; }
+  .equity-sub { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
   .pill {
     display: inline-block;
     font-size: 12px;
@@ -98,7 +101,6 @@
   .badge.skipped, .badge.failed { background: var(--badge-bg); color: var(--text-dim); }
   .empty { color: var(--text-dim); font-size: 13px; padding: 4px 0; }
   .text-block { font-size: 14px; line-height: 1.5; }
-  .tokens { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
   .refresh-note { text-align: center; font-size: 11px; color: var(--text-dim); margin-top: 8px; }
 
   .alloc-bar { display: flex; width: 100%; height: 14px; border-radius: 7px; overflow: hidden; background: var(--badge-bg); }
@@ -107,8 +109,10 @@
   .alloc-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-dim); }
   .alloc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-  svg.bars { width: 100%; height: 60px; display: block; }
-  .bars-caption { font-size: 11px; color: var(--text-dim); margin-top: 6px; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+  .stat-label { font-size: 11px; color: var(--text-dim); }
+  .stat-value { font-size: 15px; font-weight: 600; margin-top: 1px; }
+
   .error-banner {
     display: none;
     background: var(--badge-bg);
@@ -130,7 +134,10 @@
     <div class="error-banner" id="error-banner">Impossibile aggiornare i dati — mostro l'ultima versione disponibile.</div>
 
     <div class="card">
-      <div class="equity-value" id="equity">—</div>
+      <div class="equity-row">
+        <div class="equity-value" id="equity">—</div>
+        <div class="equity-change" id="equity-change"></div>
+      </div>
       <div class="equity-sub" id="equity-sub">—</div>
       <svg class="chart" id="chart" viewBox="0 0 300 72" preserveAspectRatio="none"></svg>
     </div>
@@ -147,12 +154,6 @@
     </div>
 
     <div class="card">
-      <h2>Token per ciclo</h2>
-      <svg class="bars" id="token-bars" viewBox="0 0 300 60" preserveAspectRatio="none"></svg>
-      <div class="bars-caption" id="token-bars-caption"></div>
-    </div>
-
-    <div class="card">
       <h2>Ultimo ciclo</h2>
       <div class="text-block" id="market-view">—</div>
       <div id="operations" style="margin-top: 10px;"></div>
@@ -165,7 +166,7 @@
 
     <div class="card">
       <h2>Token usati (ultimo ciclo)</h2>
-      <div class="tokens" id="tokens">—</div>
+      <div class="stat-grid" id="tokens">—</div>
     </div>
 
     <div class="refresh-note">Si aggiorna da sola ogni 60 secondi</div>
@@ -244,25 +245,14 @@
       .join("");
   }
 
-  function renderTokenBars(history) {
-    const svg = document.getElementById("token-bars");
-    const caption = document.getElementById("token-bars-caption");
-    const points = (history || []).filter((pt) => typeof pt.tokensTotal === "number").slice(-20);
-    if (points.length === 0) { svg.innerHTML = ""; caption.textContent = ""; return; }
-
-    const max = Math.max(...points.map((pt) => pt.tokensTotal), 1);
-    const w = 300, h = 60, gap = 3;
-    const barWidth = (w - gap * (points.length - 1)) / points.length;
-    svg.innerHTML = points
-      .map((pt, i) => {
-        const barHeight = Math.max(2, (pt.tokensTotal / max) * h);
-        const x = i * (barWidth + gap);
-        const y = h - barHeight;
-        return `<rect x="${x}" y="${y}" width="${barWidth}" height="${barHeight}" rx="2" fill="var(--accent)"></rect>`;
-      })
-      .join("");
-    const total = points.reduce((sum, pt) => sum + pt.tokensTotal, 0);
-    caption.textContent = `Ultimi ${points.length} cicli · ${total.toLocaleString("it-IT")} token in totale`;
+  function renderEquityChange(history) {
+    const el = document.getElementById("equity-change");
+    if (!history || history.length < 2) { el.textContent = ""; return; }
+    const first = history[0].equity, last = history[history.length - 1].equity;
+    if (!first) { el.textContent = ""; return; }
+    const pct = (last - first) / first;
+    el.className = "equity-change " + (pct >= 0 ? "pl up" : "pl down");
+    el.textContent = fmtPercent(pct);
   }
 
   function renderPositions(positions) {
@@ -303,6 +293,22 @@
     `).join("");
   }
 
+  function renderTokenStats(tokens) {
+    const el = document.getElementById("tokens");
+    if (!tokens) { el.innerHTML = '<div class="empty">n/d</div>'; return; }
+    const stats = [
+      ["Totale", tokens.total.toLocaleString("it-IT")],
+      ["Durata", `${(tokens.durationMs / 1000).toFixed(1)}s`],
+      ["Nuovi in ingresso", tokens.input.toLocaleString("it-IT")],
+      ["Generati", tokens.output.toLocaleString("it-IT")],
+      ["Letti da cache", tokens.cacheRead.toLocaleString("it-IT")],
+      ["Creati in cache", tokens.cacheCreation.toLocaleString("it-IT")],
+    ];
+    el.innerHTML = stats
+      .map(([label, value]) => `<div><div class="stat-label">${label}</div><div class="stat-value">${value}</div></div>`)
+      .join("");
+  }
+
   async function load() {
     try {
       const bust = "?t=" + Date.now();
@@ -321,16 +327,13 @@
         `<span class="pill ${latest.marketOpen ? "open" : "closed"}">${latest.marketOpen ? "Mercato aperto" : "Mercato chiuso"}</span> ` +
         `&nbsp;${latest.slot ?? ""} <span style="opacity:0.7">(all'ultimo ciclo)</span>`;
       renderChart(history);
+      renderEquityChange(history);
       renderAllocation(latest.account, latest.positions);
-      renderTokenBars(history);
       renderPositions(latest.positions);
       document.getElementById("market-view").textContent = latest.marketView ?? "—";
       renderOperations(latest.operations);
       document.getElementById("plan-next").textContent = latest.planNext ?? "—";
-      const t = latest.tokens;
-      document.getElementById("tokens").textContent = t
-        ? `${t.total.toLocaleString("it-IT")} token totali in ${(t.durationMs / 1000).toFixed(1)}s (${t.input.toLocaleString("it-IT")} nuovi, ${t.output.toLocaleString("it-IT")} generati, ${t.cacheRead.toLocaleString("it-IT")} da cache, ${t.cacheCreation.toLocaleString("it-IT")} creati)`
-        : "n/d";
+      renderTokenStats(latest.tokens);
     } catch (err) {
       document.getElementById("error-banner").style.display = "block";
       console.error(err);
