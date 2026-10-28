@@ -1,6 +1,6 @@
 {
-  "updatedAtIso": "2026-10-28T11:56:57.414Z",
-  "slot": "prova conferma",
+  "updatedAtIso": "2026-10-28T12:06:25.887Z",
+  "slot": "prova performance",
   "marketOpen": false,
   "account": {
     "equity": 100000,
@@ -8,15 +8,15 @@
     "buyingPower": 400000
   },
   "positions": [],
-  "marketView": "Il mercato è senza una direzione chiara: i titoli tecnologici sono un po' deboli, mentre oggi si aspetta la decisione della banca centrale americana sui tassi.",
+  "marketView": "Il quadro è misto: tassi fermi, disoccupazione bassa e il mercato aspetta la decisione della banca centrale americana; nessun titolo mostra un segnale di rimbalzo chiaro.",
   "operations": [],
-  "planNext": "Dopo la decisione della banca centrale sui tassi, controllare se qualche titolo scende in una zona di rimbalzo con una notizia concreta a supporto.",
+  "planNext": "Alla prossima sveglia guardare cosa decide la banca centrale americana e se qualche titolo scende abbastanza da diventare un'occasione di rimbalzo.",
   "tokens": {
-    "total": 22369,
+    "total": 22360,
     "input": 2,
-    "output": 242,
+    "output": 241,
     "cacheRead": 13093,
-    "cacheCreation": 9032,
-    "durationMs": 3435
+    "cacheCreation": 9024,
+    "durationMs": 4432
   }
 }
