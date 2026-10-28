@@ -1,28 +1,28 @@
 {
-  "updatedAtIso": "2026-10-28T18:00:22.977Z",
-  "slot": "verifica nucleo",
+  "updatedAtIso": "2026-10-28T19:10:36.999Z",
+  "slot": "verifica protezioni",
   "marketOpen": true,
   "account": {
-    "equity": 99998.74,
+    "equity": 99852.98,
     "cash": 2363.86,
-    "buyingPower": 282833.1
+    "buyingPower": 282424.98
   },
   "positions": [
     {
       "symbol": "IVV",
       "name": "S&P 500 (nucleo)",
       "qty": 126,
-      "marketValue": 97634.88,
-      "unrealizedPlPercent": -0.00001
+      "marketValue": 97489.1232,
+      "unrealizedPlPercent": -0.00151
     }
   ],
-  "marketView": "Il mercato americano resta in trend rialzista ma senza slancio, con gli investitori in attesa della decisione della Fed e il petrolio sopra i 102 dollari che pesa sull'umore.",
+  "marketView": "La banca centrale americana ha lasciato i tassi fermi al 3,75%-4%, ma due membri spingevano per un rialzo e i mercati scommettono su un aumento a dicembre; l'economia resta solida e l'inflazione sotto osservazione.",
   "operations": [],
   "vetoes": [],
-  "planNext": "Alla prossima sveglia controllare la decisione della Fed, i conti di Microsoft e se qualche titolo, come oro o comunicazioni, genera un candidato d'ingresso.",
+  "planNext": "Alla prossima sveglia controllare come reagiscono i mercati alla decisione della banca centrale e se il settore comunicazioni, l'oro o altri titoli generano un candidato d'ingresso.",
   "funnel": {
     "sinceIso": "2026-10-28T16:57:45.920Z",
-    "cycles": 3,
+    "cycles": 4,
     "cyclesWithCandidates": 0,
     "candidates": 0,
     "vetoes": 0,
@@ -38,12 +38,33 @@
     "lastSubmittedIso": null,
     "lastStallAlertIso": null
   },
+  "risk": {
+    "haltEntries": false,
+    "haltReason": null,
+    "haltSinceIso": null,
+    "satellitePnlPeak": 0,
+    "consecutiveOpFailures": 0,
+    "blockedThisCycle": false,
+    "reasons": [],
+    "staleSymbols": []
+  },
+  "monitor": {
+    "n": 0,
+    "winRate": null,
+    "expectancy": null,
+    "ciLow": null,
+    "ciHigh": null,
+    "totalPnl": 0,
+    "avgEntrySlippage": null,
+    "line": "Dal 2026-10-28: conto 0.00% contro S&P 500 0.00% · nessun trade chiuso",
+    "startIso": "2026-10-28T19:10:30.295Z"
+  },
   "tokens": {
-    "total": 8267,
+    "total": 9219,
     "input": 2,
-    "output": 280,
+    "output": 304,
     "cacheRead": 0,
-    "cacheCreation": 7985,
-    "durationMs": 3057
+    "cacheCreation": 8913,
+    "durationMs": 5308
   }
 }
