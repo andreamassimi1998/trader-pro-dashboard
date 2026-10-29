@@ -1,28 +1,28 @@
 {
-  "updatedAtIso": "2026-10-28T19:50:46.596Z",
+  "updatedAtIso": "2026-10-29T19:49:57.611Z",
   "slot": "apertura",
   "marketOpen": true,
   "account": {
-    "equity": 100069.3,
-    "cash": 2363.86,
-    "buyingPower": 283030.67
+    "equity": 99614.43,
+    "cash": 2363.85,
+    "buyingPower": 281757.02
   },
   "positions": [
     {
       "symbol": "IVV",
       "name": "S&P 500 (nucleo)",
       "qty": 126,
-      "marketValue": 97705.44,
-      "unrealizedPlPercent": 0.00071
+      "marketValue": 97250.58,
+      "unrealizedPlPercent": -0.00395
     }
   ],
-  "marketView": "La banca centrale ha lasciato i tassi fermi, ma i mercati scommettono su un possibile rialzo a dicembre; l'economia viene descritta come solida e l'inflazione sotto controllo, quindi il quadro resta incerto ma senza scossoni.",
+  "marketView": "Il quadro macro è stabile (tassi al 3,75%, disoccupazione al 4,2%), mentre i mercati azionari sono misti: tecnologia e comunicazioni in calo nell'ultimo mese, sanità ed energia in forte salita, con le tensioni con l'Iran sullo sfondo.",
   "operations": [],
   "vetoes": [],
-  "planNext": "Alla prossima sveglia vedere se il settore comunicazioni, già sceso molto nell'ultimo mese, o altri titoli fanno scattare la regola d'ingresso, e come reagiscono i mercati alle attese sui tassi di dicembre.",
+  "planNext": "Alla prossima sveglia controllare se il settore comunicazioni, sceso molto nell'ultimo mese, o altri titoli fanno scattare la regola d'ingresso, e come reagiscono i mercati alle tensioni con l'Iran.",
   "funnel": {
     "sinceIso": "2026-10-28T16:57:45.920Z",
-    "cycles": 5,
+    "cycles": 6,
     "cyclesWithCandidates": 0,
     "candidates": 0,
     "vetoes": 0,
@@ -56,15 +56,15 @@
     "ciHigh": null,
     "totalPnl": 0,
     "avgEntrySlippage": null,
-    "line": "Dal 2026-10-28: conto 0.22% contro S&P 500 0.03% · nessun trade chiuso",
+    "line": "Dal 2026-10-28: conto -0.24% contro S&P 500 -0.40% · nessun trade chiuso",
     "startIso": "2026-10-28T19:10:30.295Z"
   },
   "tokens": {
-    "total": 9215,
+    "total": 7933,
     "input": 2,
-    "output": 317,
+    "output": 339,
     "cacheRead": 0,
-    "cacheCreation": 8896,
-    "durationMs": 6979
+    "cacheCreation": 7592,
+    "durationMs": 3243
   }
 }
