@@ -1,40 +1,53 @@
 {
-  "updatedAtIso": "2026-10-29T19:49:57.611Z",
+  "updatedAtIso": "2026-10-30T19:38:55.253Z",
   "slot": "apertura",
   "marketOpen": true,
   "account": {
-    "equity": 99614.43,
+    "equity": 97691.67,
     "cash": 2363.85,
-    "buyingPower": 281757.02
+    "buyingPower": 276373.3
   },
   "positions": [
     {
       "symbol": "IVV",
       "name": "S&P 500 (nucleo)",
       "qty": 126,
-      "marketValue": 97250.58,
-      "unrealizedPlPercent": -0.00395
+      "marketValue": 95327.82,
+      "unrealizedPlPercent": -0.02364
     }
   ],
-  "marketView": "Il quadro macro è stabile (tassi al 3,75%, disoccupazione al 4,2%), mentre i mercati azionari sono misti: tecnologia e comunicazioni in calo nell'ultimo mese, sanità ed energia in forte salita, con le tensioni con l'Iran sullo sfondo.",
-  "operations": [],
+  "marketView": "Le Borse americane stanno scendendo con forza (il Nasdaq perde oltre il 3% e i titoli dei chip crollano), mentre la Fed continua a parlare di inflazione ancora alta e di possibili nuovi rialzi dei tassi.",
+  "operations": [
+    {
+      "side": "buy",
+      "symbol": "QQQ",
+      "name": "Nasdaq 100",
+      "qty": 25,
+      "price": 688.03,
+      "total": 17200.75,
+      "reason": "Nasdaq 100 è scesa dentro un trend che resta rialzista: è la regola d'ingresso testata su 11 anni di dati. Stop a 649.89 $",
+      "source": "regola",
+      "stopPrice": 649.89,
+      "verdict": "awaiting-confirmation"
+    }
+  ],
   "vetoes": [],
-  "planNext": "Alla prossima sveglia controllare se il settore comunicazioni, sceso molto nell'ultimo mese, o altri titoli fanno scattare la regola d'ingresso, e come reagiscono i mercati alle tensioni con l'Iran.",
+  "planNext": "Alla prossima sveglia controllare come reagisce il mercato dopo il calo dei titoli tecnologici e se arrivano nuove indicazioni dalla Fed sui tassi.",
   "funnel": {
     "sinceIso": "2026-10-28T16:57:45.920Z",
-    "cycles": 6,
-    "cyclesWithCandidates": 0,
-    "candidates": 0,
+    "cycles": 7,
+    "cyclesWithCandidates": 1,
+    "candidates": 1,
     "vetoes": 0,
-    "cyclesWithProposals": 0,
-    "proposals": 0,
+    "cyclesWithProposals": 1,
+    "proposals": 1,
     "rejected": 0,
     "rejectedByCode": {},
-    "awaitingConfirmation": 0,
+    "awaitingConfirmation": 1,
     "confirmed": 0,
     "submitted": 0,
     "failed": 0,
-    "lastProposalIso": null,
+    "lastProposalIso": "2026-10-30T19:38:50.100Z",
     "lastSubmittedIso": null,
     "lastStallAlertIso": null
   },
@@ -56,15 +69,15 @@
     "ciHigh": null,
     "totalPnl": 0,
     "avgEntrySlippage": null,
-    "line": "Dal 2026-10-28: conto -0.24% contro S&P 500 -0.40% · nessun trade chiuso",
+    "line": "Dal 2026-10-28: conto -2.16% contro S&P 500 -2.34% · nessun trade chiuso",
     "startIso": "2026-10-28T19:10:30.295Z"
   },
   "tokens": {
-    "total": 7933,
+    "total": 8241,
     "input": 2,
-    "output": 339,
+    "output": 294,
     "cacheRead": 0,
-    "cacheCreation": 7592,
-    "durationMs": 3243
+    "cacheCreation": 7945,
+    "durationMs": 3542
   }
 }
